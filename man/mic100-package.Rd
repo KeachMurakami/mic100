@@ -4,12 +4,12 @@
 \name{mic100-package}
 \alias{mic100}
 \alias{mic100-package}
-\title{mic100: What the Package Does (One Line, Title Case)}
+\title{mic100: Tools for MIC-100}
 \description{
-What the package does (one paragraph).
+Read and manage photosynthetic gas-exchange data logged by MIC-100
 }
 \author{
-\strong{Maintainer}: First Last \email{first.last@example.com} (YOUR-ORCID-ID)
+\strong{Maintainer}: Keach Murakami \email{keach.murakami@gmail.com} (0000-0001-8150-9535)
 
 }
 \keyword{internal}
