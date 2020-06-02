@@ -14,7 +14,7 @@ read_mic <-
     summary <-
       tibble::tibble(
         file,
-        time = lubridate::ymd_hm(paste0(abst$X1, "-", abst$X2, "-",info$X3, " ", abst$X4)),
+        time = lubridate::ymd_hm(paste0(abst$X1, "-", abst$X2, "-",abst$X3, " ", abst$X4)),
         Pn = abst$X10,
         temp = abst$X8,
         rh = mean(course$rh),
