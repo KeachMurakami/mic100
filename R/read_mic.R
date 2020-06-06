@@ -49,7 +49,7 @@ annotate_mic <-
      pull(Pn)
    result <-
      tibble::tibble(csv = basename(csvs),
-                    time = file.mtime(csvs),
+                    time = as.character(file.mtime(csvs)),
                     Pn = photosynthesis)
 
    readr::write_csv(result, output)
