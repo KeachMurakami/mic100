@@ -1,29 +1,31 @@
 #' Read Photosynthetic gas-exchange parameters Logged by MIC-100
 #'
-#' @param file path to the csv file
+#' @param file path to MIC-100 csv file
+#' @param simple return time evolution data if FALSE
 #'
+#' @importFrom rlang .data
 #' @export
 read_mic <-
   function(file, simple = TRUE){
-    abst <-
+    header <-
       readr::read_csv(file, n_max = 1, col_names = FALSE)
 
     course <-
-      readr::read_csv(file, skip = 1, col_names = c("time", "co2_raw", "temp", "rh", "co2"))
+      readr::read_csv(file, skip = 1, col_names = c("time", "co2_raw", "temp", "rh", "co2"), col_types = readr::cols())
 
     summary <-
       tibble::tibble(
         file,
-        time = lubridate::ymd_hm(paste0(abst$X1, "-", abst$X2, "-",abst$X3, " ", abst$X4)),
-        Pn = abst$X10,
-        temp = abst$X8,
+        time = lubridate::ymd_hm(paste0(header$X1, "-", header$X2, "-", header$X3, " ", header$X4)),
+        Pn = header$X10,
+        temp = header$X8,
         rh = mean(course$rh),
         co2_init = course$co2[1],
         duration = max(course$time) + 0.1, # start from 0.0 sec
-        slope = abst$X9,
-        area = abst$X5,
-        vol = abst$X6,
-        calib_temp = abst$X7)
+        slope = header$X9,
+        area = header$X5,
+        vol = header$X6,
+        calib_temp = header$X7)
 
     if(simple){
       return(summary)
@@ -34,23 +36,24 @@ read_mic <-
     }
   }
 
-#' Create annotate csv
+#' Create MIC-100 summary csv
 #'
 #' @param path directory which contains mic100's csv files
-#' @param output csv annotate file
+#' @param output name of summary file
+#'
+#' @importFrom rlang .data
 #'
 #' @export
-annotate_mic <-
+summarise_mic <-
  function(path, output){
    csvs <-
      dir(path, full.names = TRUE)
-   photosynthesis <-
-     map_dfr(csvs, read_mic) %>%
-     pull(Pn)
+
    result <-
-     tibble::tibble(csv = basename(csvs),
-                    time = as.character(file.mtime(csvs)),
-                    Pn = photosynthesis)
+     purrr::map_dfr(csvs, read_mic) |>
+     dplyr::mutate(csv = basename(csvs),
+                   time = as.character(file.mtime(csvs)),
+                   .before = 1)
 
    readr::write_csv(result, output)
    usethis::edit_file(output)

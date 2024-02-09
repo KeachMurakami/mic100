@@ -7,7 +7,9 @@
 read_mic(file, simple = TRUE)
 }
 \arguments{
-\item{file}{path to the csv file}
+\item{file}{path to MIC-100 csv file}
+
+\item{simple}{return time evolution data if FALSE}
 }
 \description{
 Read Photosynthetic gas-exchange parameters Logged by MIC-100

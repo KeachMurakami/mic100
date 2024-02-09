@@ -6,10 +6,10 @@
 \alias{mic100-package}
 \title{mic100: Tools for MIC-100}
 \description{
-Read and manage photosynthetic gas-exchange data logged by MIC-100
+Read and manage photosynthetic gas-exchange data logged by MIC-100.
 }
 \author{
-\strong{Maintainer}: Keach Murakami \email{keach.murakami@gmail.com} (0000-0001-8150-9535)
+\strong{Maintainer}: Keach Murakami \email{keach.murakami@gmail.com} (\href{https://orcid.org/0000-0001-8150-9535}{ORCID})
 
 }
 \keyword{internal}
